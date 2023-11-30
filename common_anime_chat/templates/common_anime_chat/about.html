@@ -1,0 +1,23 @@
+{% extends 'common_anime_chat/base.html' %}
+{% block content %}
+{% load static %}
+<div style="display: flex; justify-content: center; align-items: center; flex-direction: column;">
+    <h5 style="font-weight: bold; margin-top: 10px; padding-left: 15px;">Aniconnect aims to connect users to other users who have watched the same anime as them.</h5>
+    <h1 style="font-weight: bold; text-decoration: underline; margin-top: 15px;">How to use AniConnect?</h1>
+    <h5 style="font-weight: bold; margin-top: 7px; padding-left: 15px;">Upon creating their accounts and logging in, users can head to their <a href="{% url 'update_profile' %}">update profile</a> page and link their <a href="https://myanimelist.net">MyAnimeList</a> (MAL) accounts by entering their usernames in the input
+        bar and clicking on "Link". Linking accounts may take a couple of seconds so please be patient.</h5>
+    <img src="{% static 'link-MAL.png' %}" alt="" style="margin-top: 27px; max-width: 100%;">
+    <h5 style="font-weight: bold; margin-top: 10px; padding-left: 15px;">In case the user does not have a MAL account or does not want to link it, they can manually enter the anime they have watched in the 
+    "Anime watched by you" input section. Each and every entry will be separatd by a new line. It is highly recomemended to take upper and lower case in account when adding entries manually. I will explain what I mean with an example below.
+    </h5>
+    <h5 style="font-weight: bold; margin-top: 7px; padding-left: 15px;">The following is the example:</h5>
+    <img src="{% static 'update-anime-1.png' %}" alt="" style="margin-top: 27px; max-width: 100%;">
+    <h5 style="font-weight: bold; margin-top: 7px; padding-left: 15px;">The example mentioned above is a valid and recomemended approach when adding anime entries as every letter and punctuation mark is the same as the anime's official name.</h5>
+    <img src="{% static 'update-anime-2.png' %}" alt="" style="margin-top: 27px; max-width: 100%;">
+    <h5 style="font-weight: bold; margin-top: 7px; padding-left: 15px;">This new example demonstrated above is also a valid but bad approach when adding anime entries manually as when every punctuation mark and character case is not taken into account, you will not be connected to those who have watched the same anime as you because those entries are treated differently in the site.</h5>
+    <h5 style="font-weight: bold; margin-top: 15px; padding-left: 15px;">I know that may be a lot to take in, but just make sure you add the right punctuation marks and the character case when adding entries manually.</h5>
+    <h5 style="font-weight: bold; margin-top: 7px; padding-left: 15px;">Pro tip: you can also link your MAL account and then add entries manually too, just be sure to click on the "Update Anime List" button afterward.</h5>
+    <h5 style="font-weight: bold; margin-top: 7px; padding-left: 15px;">After you are done with this process, simply go to the home page and start chatting. Enjoy!</h5>
+    
+</div>
+{% endblock content %}

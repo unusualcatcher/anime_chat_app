@@ -1,0 +1,25 @@
+{% extends 'common_anime_chat/base.html' %}
+{% load static %}
+{% block stylesheet %}
+<link rel="stylesheet" type="text/css" href="{% static 'user_chats.css' %}">
+{% endblock stylesheet %}
+{% block content %}
+<div id="real-main-container">
+<div class="main-container">
+    {% for chatroom in user_chatrooms %}
+        {% for participant in chatroom.participants.all %}
+            {% if participant.user_id != request.user.id %}
+                <div class="user-profile-container">
+                    <div class="user-profile">
+                        <a href="{% url 'view-profile' user_id=participant.user_id %}">
+                        <img src="{{ participant.profile_picture.url }}" alt="" class="profile-pfp">
+                        </a>
+                        <a href="{% url 'room' room_name=chatroom.name %}" class="profile-link">{{ participant.user.username }}</a>
+                    </div>
+                </div>
+            {% endif %}
+        {% endfor %}
+    {% endfor %}
+</div>
+</div>
+{% endblock content %}

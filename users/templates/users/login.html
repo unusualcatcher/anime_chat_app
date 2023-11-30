@@ -1,0 +1,101 @@
+{% extends 'common_anime_chat/base.html' %}
+
+{% block content %}
+<style>
+    /* Custom CSS styles */
+    .login-form {
+        max-width: 400px;
+        margin: auto;
+        padding: 20px;
+        background-color: #f7f7f7;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+    }
+
+    .login-form fieldset {
+        border: none;
+        padding: 0;
+        margin-bottom: 20px;
+    }
+
+    .login-form legend {
+        font-size: 24px;
+        font-weight: bold;
+        margin-bottom: 10px;
+    }
+
+    .login-form .form-group {
+        margin-bottom: 10px;
+    }
+
+    .login-form label {
+        display: block;
+        font-weight: bold;
+    }
+
+    .login-form input[type="text"],
+    .login-form input[type="password"] {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+    }
+
+    .login-form button {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 10px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        background-color: #333;
+        color: white;
+        font-size: 16px;
+        font-weight: bold;
+        cursor: pointer;
+    }
+
+    .login-form small {
+        display: block;
+        text-align: center;
+        margin-top: 20px;
+    }
+
+    .error-message {
+        color: red;
+        font-size: 14px;
+        margin-top: 5px;
+    }
+</style>
+<div class="login-form">
+    <form method="POST">
+        {% csrf_token %}
+        <fieldset>
+            <legend>Log In</legend>
+            <div class="form-group">
+                <label for="{{ form.username.id_for_label }}">Username:</label>
+                {{ form.username }}
+                {% if form.errors.username %}
+                    {% for error in form.errors.username %}
+                        <div class="error-message">{{ error }}</div>
+                    {% endfor %}
+                {% endif %}
+            </div>
+            <div class="form-group">
+                <label for="{{ form.password.id_for_label }}">Password:</label>
+                {{ form.password }}
+                {% if form.errors.password %}
+                    {% for error in form.errors.password %}
+                        <div class="error-message">{{ error }}</div>
+                    {% endfor %}
+                {% endif %}
+            </div>
+        </fieldset>
+        <div>
+            <button type="submit">Login</button>
+        </div>
+    </form>
+    <div>
+        <small>Don't have an account? <a href="{% url 'register' %}">Sign Up</a></small>
+    </div>
+</div>
+{% endblock content %}

@@ -1,0 +1,161 @@
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #333;
+}
+
+nav {
+  background: #333;
+  height: 60px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 20px; 
+  width: 100%;
+}
+
+.logo {
+  color: #fff;
+  font-size: 24px;
+}
+
+.nav-links {
+  list-style: none;
+  display: flex;
+  margin-right: 20px;
+}
+
+.nav-links li {
+  margin-left: 12px;
+}
+
+.nav-links a {
+  color: #fff;
+  text-decoration: none;
+}
+
+.search-form {
+  display: flex;
+}
+
+.search-form input[type="text"] {
+  padding: 5px;
+  border: none;
+  border-radius: 3px 0 0 3px;
+}
+
+.search-form button {
+  background: #555;
+  border: none;
+  color: #fff;
+  border-radius: 0 3px 3px 0;
+  cursor: pointer;
+}
+
+.menu-toggle {
+  display: none;
+  align-items: center;
+  cursor: pointer;
+  padding: 0 20px;
+}
+
+.overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 90%;
+  background: rgba(0,0,0,0.9); 
+  z-index: 1;
+}
+
+.menu-open .nav-links {
+  display: block;
+  position: fixed;
+  top: 60px;
+  left: 0;
+  width: 100%;
+  background: #333;
+  z-index: 2;
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+.menu-open .nav-links li {
+  margin-left: 0;
+  padding: 5px 0;
+}
+
+.menu-open .nav-links li:first-child {
+  padding-top: 0;
+}
+
+.menu-open .nav-links li:last-child {
+  padding-bottom: 0;
+}
+
+.menu-open .nav-links li a {
+  display: block;
+  padding: 5px 0;
+  border-bottom: 1px solid #555;
+}
+
+.menu-open .logo,
+.menu-open .nav-links li a {
+  color: #fff;
+}
+
+@media only screen and (max-width: 768px) {
+  .menu-toggle {
+      display: flex;
+  }
+
+  .nav-links {
+      display: none;
+  }
+
+  .search-form {
+      margin-left: auto;
+  }
+
+  .search-form input[type="text"] {
+      padding: 8px;
+      border-radius: 3px;
+  }
+
+  .search-form button {
+      padding: 8px 15px;
+      border-radius: 3px;
+  }
+
+  nav {
+      padding: 10px;
+  }
+
+  .nav-links li {
+      margin-left: 0;
+      padding: 5px 0;
+  }
+
+  .nav-links li:first-child {
+      padding-top: 0;
+  }
+
+  .nav-links li:last-child {
+      padding-bottom: 0;
+  }
+
+  .nav-links li a {
+      display: block;
+      padding: 5px 0;
+      border-bottom: 1px solid #555;
+  }
+
+
+  .logo {
+      display: none;
+  }
+
+}

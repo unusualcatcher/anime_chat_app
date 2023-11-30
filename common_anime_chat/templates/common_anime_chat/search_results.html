@@ -1,0 +1,21 @@
+{% extends 'common_anime_chat/base.html' %}
+{% load static %}
+{% block stylesheet %}
+<link rel="stylesheet" type="text/css" href="{% static 'user_chats.css' %}">
+{% endblock stylesheet %}
+{% block content %}
+<div id="real-main-container">
+<div class="main-container">
+{% for user in users %}
+    <div class="user-profile-container">
+            <div class="user-profile">
+                <a href="{% url 'view-profile' user_id=user.id %}">
+                    <img src="{{ user.profile.profile_picture.url }}" alt="" class="profile-pfp">
+                </a>
+                <a href="{% url 'view-profile' user_id=user.id %}" class="profile-link">{{ user.username }}</a>
+    </div>
+            </div>
+{% endfor%}
+</div>
+</div>
+{% endblock content %}

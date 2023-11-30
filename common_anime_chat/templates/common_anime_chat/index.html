@@ -1,0 +1,21 @@
+{% extends 'common_anime_chat/base.html' %}
+{% load static %}
+{% block stylesheet %}
+<link rel="stylesheet" type="text/css" href="{% static 'index.css' %}">
+{% endblock stylesheet %}
+{% block content %}
+<section class="content-section" style="height: 23%;">
+    <div class="content-container">
+      <div class="image-container">
+        <img src="{% static 'anime-girl.png' %}" alt="Image">
+      </div>
+      <div class="text-container" style="width: 100%;">
+        <h2 style="width: 100%;">Start Chat</h2>
+        <p style="width: 100%;">Click on the Start Chat button</p>
+        <a href="{% url 'start_chat' %}">
+          <button class="start-chat-btn">Start Chat</button>
+        </a>
+      </div>
+    </div>
+</section>
+{% endblock content %}

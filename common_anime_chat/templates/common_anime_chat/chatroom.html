@@ -1,0 +1,161 @@
+{% extends 'common_anime_chat/base.html' %}
+{% load static %}
+{% block stylesheet %}
+<link rel="stylesheet" type="text/css" href="{% static 'chatroom.css' %}">
+{% endblock stylesheet %}
+{% block content %}
+<div style="display: flex; align-items: center; justify-content: center; background: none; width: 100%;">
+
+<div class="container" style="box-sizing: border-box; font-family: sans-serif; margin: 0; padding: 0; width: 100%; height: 80vh; display: flex; flex-direction: column; box-shadow: 2px 2px 20px rgba(0,0,0,0.4); background-color: #555;">
+    <div class="header" style="color: white; padding: 15px;">
+        <h1>{{ chat_partner.user.username }}</h1>
+    </div>
+    <!-- <div class="body" style="flex: 1; color: white; background-color: rgba(0,0,0,0.7); padding: 20px 30px;" id="chat-area"> -->
+    <div class="body" style="flex: 1; color: white; background-color: rgba(0,0,0,0.7); padding: 20px 30px; overflow-y: auto; max-height: 60vh;" id="chat-area">
+    </div>
+    <div class="footer">
+        <form style="display: flex; flex-direction: row; background-color: none;">
+            <input type="text" name="" id="input-area" style="width: 90%; border: none; outline: none; padding-left: 5px;">
+            <!-- <button id="message-send" style="background: #555; color: #fff; border-radius: 0 3px 3px 0; cursor: pointer; max-width: auto; margin-left: 4px;"
+            >SEND</button> -->
+            <button id="message-send" style="background: #3498db; color: #fff; border: none; border-radius: 5px; padding: 10px 20px; font-size: 16px; cursor: pointer; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); transition: background 0.3s, transform 0.1s;">SEND</button>
+        </form>
+    </div>
+</div>
+</div>
+
+{{ request.user.username|json_script:"user_username" }}
+{{ request.user.id|json_script:"user_id" }}
+{{ request.user.profile.profile_picture.url|json_script:"user_pfp" }}
+<script>
+    const messageArea = document.getElementById('chat-area');
+    const messageSendButton = document.getElementById('message-send');
+    const inputArea = document.getElementById('input-area');
+    const userID = '{{ request.user.id }}';
+    console.log(typeof userID);
+    console.log("User id:", userID);
+    const userUsername = "{{ request.user.username }}";
+    let userPfp = "{{ request.user.profile.profile_picture.url }}";
+    const roomName = "{{ room_name }}";
+
+    const chatSocket = new WebSocket(
+        'ws://' +
+        window.location.host +
+        '/ws/chat/' +
+        roomName +
+        '/'
+    );
+
+    chatSocket.onopen = function (event) {
+        console.log('WebSocket connection opened.');
+    };
+
+    chatSocket.onmessage = function (e) {
+        // const data = JSON.parse(e.data);
+        // const messageDiv = document.createElement('div');
+        // console.log(data.user_pfp);
+        
+        // const profilePic = document.createElement('img');
+        // profilePic.src = data.user_pfp;
+        // profilePic.alt = 'Profile Picture';
+        // profilePic.style.maxHeight = '42px';
+        // profilePic.style.borderRadius = '50%';
+
+        // // Create a message element for the received message
+        // const messageElement = document.createElement('p');
+        // messageElement.textContent = data.message;
+        
+        // // Adjust the message style based on the sender
+        // if (userUsername === data.username) {
+        //     messageElement.style.backgroundColor = 'dodgerblue';
+        //     messageElement.style.color = 'white';
+        // } else {
+        //     messageElement.style.backgroundColor = 'white';
+        //     messageElement.style.color = 'black';
+        //     messageElement.style.marginLeft = 'auto';
+        // }
+        // messageElement.style.padding = '10px';
+        // messageElement.style.width = 'fit-content';
+        // messageElement.style.borderRadius = '10px';
+        // messageElement.style.marginBottom = '15px';
+        // messageDiv.style.display = 'flex';
+        // messageDiv.style.flexDirection = 'row';
+        // messageDiv.appendChild(profilePic);
+        // messageDiv.appendChild(messageElement);
+        // messageArea.appendChild(messageDiv);
+        const data = JSON.parse(e.data);
+const messageDiv = document.createElement('div');
+console.log(data.user_pfp);
+console.log("data:", data);
+
+// Create a message element for the received message
+const messageElement = document.createElement('p');
+messageElement.textContent = data.message;
+
+// Create an anchor (a) element for the user's profile
+const profileLink = document.createElement('a');
+console.log("Data user profile url:", data.user_profile_url);
+profileLink.href = data.user_profile_url;  // Set the URL to the user's profile page
+
+// Create a profile picture element
+const profilePic = document.createElement('img');
+profilePic.src = data.user_pfp;
+profilePic.alt = 'Profile Picture';
+profilePic.style.maxHeight = '42px';
+profilePic.style.borderRadius = '50%';
+
+// Append the profile picture to the anchor (a) element
+profileLink.appendChild(profilePic);
+
+// Adjust the message style based on the sender
+if (userUsername === data.username) {
+    // If the message is from the request.user, profile pic on the left
+    messageElement.style.backgroundColor = 'dodgerblue';
+    messageElement.style.color = 'white';
+    messageDiv.appendChild(profileLink);
+    messageDiv.appendChild(messageElement);
+} else {
+    // If the message is from another user, profile pic on the right
+    messageElement.style.backgroundColor = 'white';
+    messageElement.style.color = 'black';
+    messageElement.style.marginLeft = 'auto';
+    messageDiv.appendChild(messageElement);
+    messageDiv.appendChild(profileLink);
+}
+
+messageElement.style.padding = '10px';
+messageElement.style.width = 'fit-content';
+messageElement.style.borderRadius = '10px';
+messageElement.style.marginBottom = '15px';
+messageDiv.style.display = 'flex';
+messageDiv.style.flexDirection = 'row';
+messageArea.appendChild(messageDiv);
+
+
+        messageArea.scrollTop = messageArea.scrollHeight;
+    };
+
+    messageSendButton.addEventListener('click', function (e) {
+    e.preventDefault(); // Prevent the default form submission action
+
+    const message = inputArea.value;
+    chatSocket.send(JSON.stringify({
+        'message': message,
+        'username': userUsername,
+        'user_pfp': userPfp,
+        'room_name': roomName,
+        'user_id':userID
+    }));
+    inputArea.value = '';
+});
+
+
+    chatSocket.onclose = function (event) {
+        console.log('WebSocket connection closed.');
+    };
+
+    chatSocket.onerror = function (error) {
+        console.error('WebSocket error:', error);
+    };
+</script>
+{% endblock content %}

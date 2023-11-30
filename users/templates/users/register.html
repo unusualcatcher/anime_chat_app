@@ -1,0 +1,110 @@
+{% extends 'common_anime_chat/base.html' %}
+
+{% block content %}
+<style>
+    /* Custom CSS styles */
+    .registration-form {
+        max-width: 400px;
+        margin: auto;
+        padding: 20px;
+        background-color: #f7f7f7;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+    }
+
+    .registration-form fieldset {
+        border: none;
+        padding: 0;
+        margin-bottom: 20px;
+    }
+
+    .registration-form legend {
+        font-size: 24px;
+        font-weight: bold;
+        margin-bottom: 10px;
+    }
+
+    .registration-form .form-group {
+        margin-bottom: 10px;
+    }
+
+    .registration-form label {
+        display: block;
+        font-weight: bold;
+    }
+
+    .registration-form input[type="text"],
+    .registration-form input[type="email"],
+    .registration-form input[type="password"] {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+    }
+
+    .registration-form button {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 10px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        background-color: #333;
+        color: white;
+        font-size: 16px;
+        font-weight: bold;
+        cursor: pointer;
+    }
+
+    .registration-form small {
+        display: block;
+        text-align: center;
+        margin-top: 20px;
+    }
+    .error-message {
+        color: red;
+        font-size: 14px;
+    }
+</style>
+<div class="registration-form">
+    <form method="POST">
+        {% csrf_token %}
+        <fieldset>
+            <legend>Join Today</legend>
+            <div class="form-group">
+                <label for="{{ form.username.id_for_label }}">Username:</label>
+                {{ form.username }}
+                {% for error in form.username.errors %}
+                    <span class="error-message">{{ error }}</span>
+                {% endfor %}
+            </div>
+            <div class="form-group">
+                <label for="{{ form.email.id_for_label }}">Email:</label>
+                {{ form.email }}
+                {% for error in form.email.errors %}
+                    <span class="error-message">{{ error }}</span>
+                {% endfor %}
+            </div>
+            <div class="form-group">
+                <label for="{{ form.password1.id_for_label }}">Password:</label>
+                {{ form.password1 }}
+                {% for error in form.password1.errors %}
+                    <span class="error-message">{{ error }}</span>
+                {% endfor %}
+            </div>
+            <div class="form-group">
+                <label for="{{ form.password2.id_for_label }}">Confirm Password:</label>
+                {{ form.password2 }}
+                {% for error in form.password2.errors %}
+                    <span class="error-message">{{ error }}</span>
+                {% endfor %}
+            </div>
+        </fieldset>
+        <div>
+            <button type="submit">Sign up</button>
+        </div>
+    </form>
+    <div>
+        <small>Already have an account? <a href="{% url 'login' %}">Sign In</a></small>
+    </div>
+</div>
+{% endblock content %}

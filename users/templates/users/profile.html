@@ -1,0 +1,29 @@
+{% extends 'common_anime_chat/base.html' %}
+{% block stylesheet %}
+{% load static %}
+  <link rel="stylesheet" href="{% static 'profile.css' %}">
+{% endblock stylesheet %}
+
+{% block content %}
+<div class="profile-page-container">
+  <div class="profile-page-content">
+    <div class="profile-container">
+      <div class="profile-card">
+        <div class="profile-photo">
+          <img src="{{ user.profile.profile_picture.url }}" alt="Profile Photo">
+        </div>
+        <div class="profile-info">
+          <h2>{{ user.username }}</h2>
+          <!-- <a href="#">
+            <button class="chat-button">Chat</button>
+            </a> -->
+          <p>{{ user.name }}</p>
+          <p>{{ user.profile.biography }}</p>
+          <a href="{% url 'update_profile' %}">Update Your Profile</a>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock content %}

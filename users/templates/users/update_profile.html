@@ -1,0 +1,73 @@
+{% extends 'common_anime_chat/base.html' %}
+{% block stylesheet %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'update_profile.css' %}">
+{% endblock stylesheet %}
+{% block content %}
+<div class="update-profile-container">
+  <h2>Edit Your Profile</h2>
+  <form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {% for field in u_form %}
+    <div class="form-group">
+      <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+      {{ field }}
+      {% if field.errors %}
+      <div class="error-message">
+        {% for error in field.errors %}
+        <span>{{ error }}</span>
+        {% endfor %}
+      </div>
+      {% endif %}
+    </div>
+    {% endfor %}
+    <div class="form-group">
+      <label for="{{ p_form.profile_picture.id_for_label }}">Profile Picture</label>
+      {{ p_form.profile_picture }}
+      {% if p_form.profile_picture.errors %}
+      <div class="error-message">
+        {% for error in p_form.profile_pictures.errors %}
+        <span>{{ error }}</span>
+        {% endfor %}
+      </div>
+      {% endif %}
+    </div>
+    <div class="form-group">
+        <label for="{{ p_form.biography.id_for_label }}">Bio:</label>
+        {{ p_form.biography }}
+        {% if p_form.biography.errors %}
+        <div class="error-message">
+          {% for error in p_form.biography.errors %}
+          <span>{{ error }}</span>
+          {% endfor %}
+        </div>
+        {% endif %}
+      </div>
+    <button type="submit" id="update-btn" name="update_user_profile">Update Profile</button>
+    <div class="form-group">
+      <label for="{{ MAL_form.watched_anime.id_for_label }}">MyAnimeList Username:</label>
+      {{ MAL_form.MAL_username }}
+      {% if MAL_form.MAL_username.errors %}
+      <div class="error-message">
+        {% for error in MAL_form.MAL_username.errors %}
+        <span>{{ error }}</span>
+        {% endfor %}
+      </div>
+      {% endif %}
+    </div>
+    <button type="submit" name="update_MAL_username" id="link-btn">Link</button>
+    <div class="form-group">
+      <label for="{{ anime_form.watched_anime_list.id_for_label }}">Anime watched by you:</label>
+      {{ anime_form.watched_anime_list }}
+      {% if anime_form.watched_anime_list.errors %}
+      <div class="error-message">
+        {% for error in anime_form.watched_anime_list.errors %}
+        <span>{{ error }}</span>
+        {% endfor %}
+      </div>
+      {% endif %}
+    </div>
+    <button type="submit" name="update_anime" id="link-btn">Update Anime List</button>
+  </form>
+</div>
+{% endblock content %}

@@ -1,0 +1,115 @@
+/* .content-section {
+  background: #000;
+  color: #fff;
+  padding: 50px;
+}
+
+.content-container {
+  display: flex;
+  align-items: center;
+  width: 90%;
+}
+
+.image-container {
+  flex-basis: 70%;
+  margin-right: 30px;
+
+  height: 100%;
+}
+
+.image-container img {
+  height: 100%;
+  max-width: 100%;
+}
+
+.text-container {
+  flex-basis: 50%;
+}
+
+.text-container h2 {
+  font-size: 24px;
+}
+
+.text-container p {
+  margin-top: 10px;
+  font-size: 18px;
+}
+
+.start-chat-btn {
+  padding: 10px 20px;
+  background: #555;
+  border: none;
+  color: #fff;
+  font-size: 16px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+ */
+
+ .content-section {
+  background: #000;
+  color: #fff;
+  padding: 50px;
+}
+
+.content-container {
+  display: flex;
+  align-items: center;
+  width: 90%;
+}
+
+.image-container {
+  flex-basis: 70%;
+  margin-right: 30px;
+  height: 100%;
+}
+
+.image-container img {
+  height: 100%;
+  max-width: 100%;
+}
+
+.text-container {
+  flex-basis: 50%;
+}
+
+.text-container h2 {
+  font-size: 24px;
+}
+
+.text-container p {
+  margin-top: 10px;
+  font-size: 18px;
+}
+
+.start-chat-btn {
+  padding: 10px 20px;
+  background: #555;
+  border: none;
+  color: #fff;
+  font-size: 16px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+/* Media Queries */
+@media screen and (min-width: 768px) {
+  .text-container h2 {
+    font-size: 28px;
+  }
+
+  .text-container p {
+    font-size: 22px;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .text-container h2 {
+    font-size: 32px;
+  }
+
+  .text-container p {
+    font-size: 26px;
+  }
+}

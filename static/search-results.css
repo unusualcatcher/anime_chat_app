@@ -1,0 +1,58 @@
+.main-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+/* 
+#real-main-container {
+    display: flex;
+    max-width: 400px;
+    height: 100%;
+    background-color: #f7f7f7;
+    justify-content: center;
+    align-items: center;
+} */
+
+#real-main-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    max-width: 400px;
+    height: 100%;
+    background-color: #f7f7f7;
+    margin: 0 auto; /* Center the real-main-container horizontally */
+    padding: 0; /* Remove padding to extend borders */
+    border-radius: 5px; /* Add border radius to the real-main-container */
+}
+
+
+/* Style for the container div */
+.user-profile-container {
+    background-color: #f7f7f7;
+    border-top: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;;
+    border-radius: 5px;
+    padding: 10px;
+    margin: 10px; 
+}
+
+
+.user-profile {
+    display: flex;
+    flex-direction: row;
+    align-items: center; /* Center items vertically */
+}
+
+/* Style for profile picture */
+.profile-pfp {
+    width: 50px;
+    height: 50px;
+    margin-right: 10px; /* Add margin for spacing between profile picture and username */
+}
+
+.profile-link {
+    /* Add your desired styles for the usernames here */
+    font-weight: bold; /* You can adjust this as needed */
+}

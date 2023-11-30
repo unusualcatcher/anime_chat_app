@@ -1,0 +1,199 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" contents="'ie=edge">
+    <link rel="stylesheet" type="text/css" href="{% static 'base.css' %}">
+    <script src="https://kit.fontawesome.com/e67857e448.js" crossorigin="anonymous"></script>
+    {% block stylesheet %} {% endblock %}
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+        rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM"
+        crossorigin="anonymous">
+    {% if title %}
+    <title>{{ title }}</title>
+    {% else %}
+    <title>Random title</title>
+    {% endif %}
+</head>
+
+<body>
+    <nav>
+        <div class="menu-toggle">
+            <input type="checkbox" id="check" style="display: none;">
+            <label for="check" class="checkbtn">
+                <i class="fa-solid fa-bars"></i>
+            </label>
+        </div>
+        <div class="logo">Website Name</div>
+        <div class="menu-container">
+            <ul class="nav-links">
+                <li><a href="{% url 'common-anime-chat-home' %}">Home</a></li>
+                <li><a href="{% url 'register' %}">Register</a></li>
+                {% if request.user.is_authenticated %}
+                <li><a href="{% url 'logout' %}">Logout</a></li>
+                <li><a href="{% url 'profile' %}">Profile</a></li>
+                <li><a href="{% url 'user_chat' %}">My Chats</a></li>
+                {% else %}
+                <li><a href="{% url 'login' %}">Login</a></li>
+                {% endif %}
+                <li><a href="{% url 'common-anime-chat-about' %}">About Us</a></li>
+            </ul>
+        </div>
+        <form class="search-form" action="{% url 'search_users' %}" method="GET">
+            <input type="text" placeholder="Search..." name="search_query">
+            <button type="submit">Search</button>
+        </form>
+    </nav>
+    <div class="overlay"></div>
+    {% if messages %}
+    <div class="alert alert-success" role="alert" style="margin-bottom: 0px;">
+        {% for message in messages %}
+        {{ message }}
+        <br>
+        {% endfor %}
+    </div>
+    {% endif %}
+    {% block content %}{% endblock %}
+    {{ request.user.id|json_script:"user_id" }}
+    {{ request.user.is_authenticated|json_script:"user_is_authenticated" }}
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+        integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"
+        integrity="sha384-fbbOQedDUMZZ5KreZpsbe1LCZPVmfTnH7ois6mU1QK+m14rQ1l2bGBq41eYeM/fS"
+        crossorigin="anonymous"></script>
+        <script>
+            function updateActiveStatus(isActive) {
+            console.log("Updating active status");
+            const userId = JSON.parse(document.getElementById('user_id').textContent);
+            console.log("UserID: " + userId);
+
+            // Create a data object with the user_id and is_active status
+            const data = {
+                user_id: userId,
+                is_active: isActive,
+            };
+            console.log("JSON stringified data: "+JSON.stringify(data));
+
+            // Fetch API to send the update request
+            fetch('/update_active_status/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-Requested-With': 'Fetch',
+                    'X-CSRFToken': '{{ csrf_token }}',
+                },
+                body: JSON.stringify(data),
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log('Active status updated');
+                console.log('Data status: ' + data.status);
+            })
+            .catch(error => {
+                console.error('Error updating active status:', error);
+            });
+        }
+
+        document.addEventListener('visibilitychange', function() {
+            console.log('Visibility state changed. New state:', document.visibilityState)
+            if (document.visibilityState === 'visible') {
+                console.log("Visible");
+                updateActiveStatus(true);
+            } else {
+                console.log("Not visible");
+                updateActiveStatus(false);
+            }
+
+        });
+
+        const menuToggle = document.getElementById('check');
+        const menuContainer = document.querySelector('.menu-container');
+        const overlay = document.querySelector('.overlay');
+        function addElementToList(url, list, text) {
+            const listItem = document.createElement('li');
+            const link = document.createElement('a');
+            link.href = url;
+            link.textContent = text;
+            listItem.classList.add('links-item');
+            listItem.appendChild(link);
+            listItem.style.listStyleType = 'none';
+            listItem.style.marginTop = '10px';
+            link.style.fontSize = '32px';
+            link.style.color = 'white';
+            link.style.textDecoration = 'none';
+            link.style.fontFamily = 'Sans-serif';
+            list.appendChild(listItem);
+
+            
+        } 
+        menuToggle.addEventListener('change', function() {
+            if (menuToggle.checked) {
+                var userIsAuthenticated = JSON.parse(document.getElementById('user_is_authenticated').textContent);
+                console.log("User is authenticated in promise: "+userIsAuthenticated);
+                console.log(typeof userIsAuthenticated);
+
+                overlay.style.display = 'flex';
+                overlay.style.flexDirection = 'column';
+                overlay.style.justifyContent = 'center';
+                overlay.style.alignItems = 'center';
+                const list = document.createElement('ul');
+                list.classList.add('phone-links');
+                overlay.appendChild(list);
+                console.log("Outside if statement in promise.");
+                if (userIsAuthenticated === true) {
+                    console.log("Inside if statement in promise.");
+                    console.log("DATA:");
+                           
+                           
+                    addElementToList('/', list, 'Home');
+                    addElementToList('/profile/', list, 'Profile');
+                    addElementToList('/logout/', list, "Logout");
+                    addElementToList('/about/', list, 'About Us');
+                    addElementToList('/chats/', list, 'My Chats');
+
+                }
+                else{
+                    addElementToList('/', list, 'Home');
+                    addElementToList('/profile/', list, 'Register');
+                    addElementToList('/login/', list, 'Login');
+                    addElementToList('/about/', list, 'About Us');
+                }
+                const crossContainer = document.createElement('div');
+                list.appendChild(crossContainer);
+                const cross = document.createElement('input');
+                cross.type = 'checkbox';
+                cross.id = 'cross';
+                cross.style.display = 'none';
+                const label = document.createElement('label');
+                const crossIcon = document.createElement('i');
+                crossIcon.classList.add('fa-solid fa-x');
+                label.appendChild(crossIcon);
+                label.setAttribute('for', 'cross');
+                crossContainer.appendChild(cross);
+                crossContainer.appendChild(label);
+                cross.addEventListener('change', function() {
+                    if (cross.checked) {
+                        overlay.style.display = 'none';
+                    }
+                })
+
+
+            }
+        })
+
+        updateActiveStatus(true);
+    </script>
+</body>
+</html>

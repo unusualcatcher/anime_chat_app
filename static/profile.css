@@ -1,0 +1,102 @@
+.profile-page-container {
+  /* Styles from body, html */
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.profile-page-content {
+  /* New div to contain the profile content */
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.profile-container {
+  width: 60%;
+  max-width: 800px;
+  background-color: #f7f7f7;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  margin-top: 20px;
+  padding: 20px;
+}
+
+/* Remaining styles for the profile content */
+.profile-card {
+  text-align: center;
+}
+
+.profile-photo {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  overflow: hidden;
+  margin: 0 auto 20px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+}
+
+.profile-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.profile-info {
+  text-align: center;
+}
+
+h2 {
+  font-size: 24px;
+  margin-bottom: 5px;
+}
+
+p {
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+/* Media Query for smaller devices */
+@media (max-width: 767px) {
+  .profile-container {
+    width: 90%;
+    padding: 10px;
+  }
+
+  .profile-photo {
+    width: 120px;
+    height: 120px;
+  }
+
+  h2 {
+    font-size: 20px;
+  }
+
+  p {
+    font-size: 16px;
+  }
+}
+
+
+.chat-button {
+  margin-top: 15px; /* Add some spacing below the profile info */
+  padding: 10px 20px;
+  background-color: #4CAF50;
+  color: white;
+  font-size: 16px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  transition: background-color 0.3s ease;
+}
+
+.chat-button:hover {
+  background-color: #45a049;
+}
+
+/* ... (Remaining CSS styles) ... */
